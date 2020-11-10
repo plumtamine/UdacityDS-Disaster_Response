@@ -4,6 +4,18 @@ Disaster Response Pipelines - Creating data ETL pipeline, Machine Learning pipel
 # Prerequisites
 Python ver 3.x.
 
+# Instructions
+* Run the following commands to run ETL pipeline that cleans data and stores in database:  
+  `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`  
+* Run the following commands to run ML pipeline that trains and saves classifier:  
+  `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`  
+* Run the following command to get the workspace ID and Domain, then get the web app url:   
+  > http://<i></i>WORKSPACESPACEID-3001.WORKSPACEDOMAIN  
+  
+  `env | grep WORK`     
+* Run the following command in the app's directory to run the web app:   
+  `python app/run.py`  
+
 # Project Understanding
 This Disaster Response project is aiming to analyze message texts, predict disaster categories based on messages to facilitate faster response and provide a web app for message-category lookup. There are 3 modules to be done to achieve this goal: 
 1. ETL pipeline: The raw data is not in a perfect form to consume directly. We create a pipeline to clean, manipulate and store data, as data preparation for modeling.
