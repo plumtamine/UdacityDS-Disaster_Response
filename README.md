@@ -1,5 +1,5 @@
 # UdacityDS-Disaster_Response
-Disaster Response Pipelines - Creating data ETL pipeline, Machine Learning pipeline and publishing web app to query for model prediction.
+Disaster Response Pipelines - Creating data ETL pipeline, Machine Learning pipeline and Publishing web app for category classification queries.
 
 # Prerequisites
 Python ver 3.x.
