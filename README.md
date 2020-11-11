@@ -18,9 +18,9 @@ Python ver 3.x.
 
 # Project Understanding
 This Disaster Response project is aiming to analyze message texts, predict disaster categories based on messages to facilitate faster response and provide a web app for message-category lookup. There are 3 modules to be done to achieve this goal: 
-1. ETL pipeline: The raw data is not in a perfect form to consume directly. We create a pipeline to clean, manipulate and store data, as data preparation for modeling.
-2. Machine Learning pipeline: When creating model for data, we run a large amount of iterations to find the best parameters of model. Instead of repeating similar chunk of codes every time, we simply the process with Machine Learning pipeline. In addition, this helps to process train data in each fold to avoid data leak.
-3. Web Deployment: With both the data and model ready from the back end, we use plotly.js and flask to deploy the dashboard and search bar to query messages.
+1. ETL pipeline: The raw data is not in a perfect form to consume directly. A pipeline is created to clean, manipulate and store data, as data preparation for modeling.
+2. Machine Learning pipeline: When creating model for data, a large amount of iterations are used to find the best parameters of model. Instead of repeating similar chunk of codes every time, we simply the process with Machine Learning pipeline. In addition, this helps to process train data in each fold to avoid data leak.
+3. Web Deployment: With both the data and model ready from the back end, plotly.js and flask are used to deploy the dashboard and search bar to query messages.
 
 # ETL pipeline
 The ETL script, process_data.py, takes the file paths of the two datasets and database, cleans the datasets, and stores the clean data into a SQLite database in the specified database file path.
