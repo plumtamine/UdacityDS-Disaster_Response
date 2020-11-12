@@ -21,17 +21,27 @@ from sklearn.linear_model import RidgeClassifier
 import pickle
 
 def load_data(database_filepath):
+    """Load data using the .db file from the data processing step and get it ready for model building
+    Args:
+    database_filepath: The filepath of .db file from the data processing step
+    
+    Returns:
+    X: data set of messages
+    Y: data set of categories
+    category_names: list of category names
+    """
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql("SELECT * FROM DisasterResponse", engine)
     X = df.message.values
     Y = df[df.columns[4:]]
-    Y = Y.replace(2,1)
     category_names = list(Y.columns.values)
     return X, Y, category_names
     pass
 
 
 def tokenize(text):
+    """Tokenize message input
+    """
     url_regex = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
     detected_urls = re.findall(url_regex, text)
     for url in detected_urls:
@@ -50,6 +60,12 @@ def tokenize(text):
 
 
 def build_model():
+    """Build model pipeline with grid search
+    clf: choose an algorithm and use MultiOutputClassifier for multiclass model
+    pipeline: combine clf with other text processing steps in one pipeline
+    parameters: choose the parameters and values for grid search
+    cv: finalize model pipeline with grid search
+    """
     clf = MultiOutputClassifier(RidgeClassifier())
     pipeline_best = Pipeline([
             ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -70,12 +86,27 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """Evaluate the precision, recall and f1 score for the test set
+    Args:
+    model: the model fit by the train set
+    X_test: test set of X, used to predict Y values -- Y_pred
+    Y_test: test set of Y (true Y values), used to compare with Y_pred (predicted Y values) in the classification           report
+    category_names: a collection of all category names, being used in the classification_report output so there will be     evaluation of each category
+    
+    Returns:
+    A print-out of the classification_report, including precision, recall and f1 score for the test set from each category
+    """
     Y_pred = model.predict(X_test)
     print(classification_report(Y_test, Y_pred, target_names = category_names))
     pass
 
 
 def save_model(model, model_filepath):
+    """Save model as a pickle file
+    Args:
+    model: the model fit by the train set
+    model_filepath: the filepath of model
+    """
     pickle.dump(model, open(model_filepath, 'wb'))
     pass
 

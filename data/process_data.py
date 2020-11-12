@@ -31,10 +31,14 @@ def clean_data(df):
     
         # convert column from string to numeric
         categories[column] = pd.to_numeric(categories[column])
+    # Identify data that are not binary
+    drop_index = categories.loc[categories[(categories!=0)&(categories!=1)].any(axis=1)==True,:].index    
     # drop the original categories column from `df`
     df.drop('categories', axis=1, inplace=True)
     # concatenate the original dataframe with the new `categories` dataframe
     df = pd.concat([df, categories], axis=1)
+    # remove data that are not binary
+    df.drop(drop_index,inplace=True)
     # drop duplicates
     df.drop_duplicates(inplace=True)
     return df
@@ -42,8 +46,9 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """save cleaned data frame to .db file"""
     engine = create_engine('sqlite:///'+database_filename)
-    df.to_sql('DisasterResponse', engine, index=False)
+    df.to_sql('DisasterResponse', engine, index=False, if_exists = 'replace')
     pass  
 
 
