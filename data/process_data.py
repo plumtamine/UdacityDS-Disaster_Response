@@ -3,6 +3,10 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    load message and category data in .csv files
+    merge both data sets into one by id and return this dataframe for data cleaning
+    """
     # load messages dataset
     messages = pd.read_csv(messages_filepath)
     # load categories dataset
@@ -14,6 +18,15 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    clean data set with following steps:
+    1. break down the category string value by each of category into individual column
+    2. get cleaned up category names
+    3. retrieve category binary value from the end of string
+    4. remove non-binary values in data
+    5. remove duplicates
+    then output the cleaned dataframe
+    """
     # create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(pat=';', expand=True)
     # select the first row of the categories dataframe
